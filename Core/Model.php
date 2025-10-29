@@ -6,12 +6,23 @@ use Configs\Database;
 use PDO;
 use PDOStatement;
 
+/**
+ * Class Model
+ * 
+ * BaseModel that provides helper methods for all Model classes
+ * Include: querying, inserting, updating, and deleting records
+ */
 abstract class Model
 {
+    /**
+     * Model constructor
+     * 
+     * @param \Configs\Database $db
+     */
     protected function __construct(protected Database $db) {}
 
     /**
-     * Summary of getAll
+     * Fetch all records from a query
      * @param string $sql
      * @return array
      */
@@ -29,7 +40,7 @@ abstract class Model
     }
 
     /**
-     * Summary of getByParams
+     * Fetch records with bound parameters
      * @param array $params
      * @param string $sql
      * @return array
@@ -48,7 +59,7 @@ abstract class Model
     }
 
     /**
-     * Summary of insert
+     * Insert a record into database
      * @param string $table
      * @param array $data
      * @return bool|string
@@ -70,7 +81,7 @@ abstract class Model
     }
 
     /**
-     * Summary of update
+     * Update a record from database
      * @param string $sql
      * @param array $params
      * @return void
@@ -83,7 +94,7 @@ abstract class Model
     }
 
     /**
-     * Summary of delete
+     * Delete a record from database
      * @param string $sql
      * @param array $params
      * @return void
@@ -96,7 +107,10 @@ abstract class Model
     }
 
     /**
-     * Summary of executeQuery
+     * Execute a SQL query
+     * 
+     * Prevents SQL Injection by using Prepared Statements
+     * 
      * @param string $sql
      * @param array $params
      * @return bool|PDOStatement
