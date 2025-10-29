@@ -5,8 +5,14 @@ namespace Configs;
 use PDO;
 use PDOException;
 
+/**
+ * Class Database
+ * 
+ * Handles Database Connection
+ */
 class Database
 {
+    // Handles connecting
     public function connect()
     {
         try {
