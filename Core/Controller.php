@@ -8,16 +8,17 @@ namespace Core;
  * BaseController provides helper methods for All Controller classes
  */
 abstract class Controller
-{	
+{
     /**
      * Render a specified view 
      * @param string $view
      * @param array $data
-     * @return void
+     * @return mixed
      */
-    private function renderView(string $view, array $data = []): void
+    private function render(string $view, array $data = []): mixed
     {
-        require_once VIEW_PATH . $view . '.php';
+        extract($data);
+        return require_once VIEW_PATH . $view . '.php';
     }
 
     /**
@@ -27,18 +28,18 @@ abstract class Controller
      * @param string $layout_view
      * @param string $title
      * @param array $data
-     * @return void
+     * @return mixed
      */
-    protected function view(string $view, string $layout_view, string $title, array $data = [])
+    protected function view(string $view, string $layout, array $data = []): mixed
     {
         ob_start();
-        $this->renderView($view, $data);
+        $this->render($view, $data);
 
         $view_data = [
-            'title' => $title,
+            'title' => $data['title'] ?? 'Document',
             'content' => ob_get_clean(),
         ];
 
-        $this->renderView($layout_view, $view_data);
+        return $this->render('layouts/main-layouts/' . $layout, $view_data);
     }
 }
